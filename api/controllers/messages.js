@@ -9,6 +9,7 @@ exports.messages_get_all = (req, res, next) => {
         wiadomosc: "Lista wszystkich wiadomości",
         info: docs.map((message) => {
           return {
+            _id: message._id,
             name: message.name,
             title: message.title,
           };
@@ -43,7 +44,6 @@ exports.messages_add_new = (req, res, next) => {
 exports.messages_get_message = (req, res, next) => {
   const id = req.params.messageId;
   Message.findById(id)
-    .save()
     .then((doc) => {
       res.status(200).json({
         wiadomosc: "Szczegoly wiadomości " + id,

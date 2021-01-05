@@ -15,8 +15,8 @@ exports.shops_get_all = (req, res, next) => {
 
 //dodaj nowy sklep
 exports.shops_add_new = (req, res, next) => {
-  let categories = req.body.category.split(' ');
-    const shop = new Shop({
+  let categories = req.body.category.split(",");
+  const shop = new Shop({
     _id: new mongoose.Types.ObjectId(),
     name: req.body.name,
     email: req.body.email,
@@ -41,9 +41,9 @@ exports.shops_add_new = (req, res, next) => {
 
 //pobierz pojedynczy sklep
 exports.shops_get_shop = (req, res, next) => {
+  console.log("getting show");
   const id = req.params.shopId;
   Shop.findById(id)
-    .save()
     .then((doc) => {
       res.status(200).json({
         wiadomosc: "Szczegoly sklepu " + id,
@@ -52,7 +52,6 @@ exports.shops_get_shop = (req, res, next) => {
     })
     .catch((err) => res.status(500).json({ error: err }));
 };
-
 
 //zmien pojedynczy sklep
 exports.shops_update = (req, res, next) => {

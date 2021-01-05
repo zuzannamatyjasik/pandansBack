@@ -27,7 +27,6 @@ exports.user_sign_up = (req, res, next) => {
 
 //logowanie
 exports.user_login = (req, res, next) => {
-  console.log(req.body.email);
   User.findOne({ email: req.body.email })
     .then((user) => {
       if (!user) {

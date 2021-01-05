@@ -2,8 +2,10 @@ const express = require("express");
 const morgan = require("morgan");
 const monogoose = require("mongoose");
 const bodyParser = require("body-parser");
+const cors = require("cors");
 
 const app = express();
+app.use(cors());
 
 const dbURL =
   "mongodb+srv://admin:" +

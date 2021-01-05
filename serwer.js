@@ -2,7 +2,7 @@ const http = require("http");
 const app = require("./app");
 
 //definicja numeru portu
-const port = process.env.port || 3000;
+const port = process.env.port || 3001;
 
 //utworzenie serwera
 const serwer = http.createServer(app);
