@@ -41,7 +41,7 @@ exports.user_login = (req, res, next) => {
             },
             process.env.hasloJWT,
             {
-              expiresIn: "1h",
+              expiresIn: "1m",
             }
           );
           res.status(200).json({
@@ -52,4 +52,16 @@ exports.user_login = (req, res, next) => {
       });
     })
     .catch((err) => res.status(500).json({ error: err }));
+};
+
+exports.check_token = (req, res, next) => {
+  const token = req.body.token;
+  jwt.verify(token, process.env.hasloJWT, function (err, decoded) {
+    if (err) res.status(200).json({ valid: false });
+    else {
+      res.status(200).json({
+        valid: true,
+      });
+    }
+  });
 };
