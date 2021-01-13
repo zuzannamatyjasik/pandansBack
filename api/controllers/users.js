@@ -41,7 +41,7 @@ exports.user_login = (req, res, next) => {
             },
             process.env.hasloJWT,
             {
-              expiresIn: "1m",
+              expiresIn: "1h",
             }
           );
           res.status(200).json({
