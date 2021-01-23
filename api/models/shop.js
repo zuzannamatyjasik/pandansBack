@@ -11,6 +11,13 @@ const shopSchema = mongoose.Schema({
     type: String,
     require: true,
   },
+  image: {
+    type: String,
+  },
+  photo: {
+    data: Buffer,
+    contentType: String,
+  },
   bio: {
     type: String,
     require: true,
@@ -20,13 +27,13 @@ const shopSchema = mongoose.Schema({
     require: true,
   },
   facebook: {
-    type: String
+    type: String,
   },
   instagram: {
-    type: String
+    type: String,
   },
   website: {
-    type: String
+    type: String,
   },
   followers: Number,
 });

@@ -7,6 +7,7 @@ const cors = require("cors");
 const app = express();
 app.use(cors());
 
+
 const dbURL =
   "mongodb+srv://admin:" +
   process.env.hasloAtlasa +
@@ -32,6 +33,7 @@ const userRoutes = require("./api/routes/users");
 app.use("/shops", shopRoutes);
 app.use("/messages", messageRoutes);
 app.use("/users", userRoutes);
+
 
 app.use((req, res, next) => {
   const error = new Error("Nie znaleziono");

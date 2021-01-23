@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 const Shop = require("../models/shop.js");
+var fs = require("fs");
+var path = require("path");
 
 //pobierz liste sklepów
 exports.shops_get_all = (req, res, next) => {
@@ -15,11 +17,18 @@ exports.shops_get_all = (req, res, next) => {
 
 //dodaj nowy sklep
 exports.shops_add_new = (req, res, next) => {
+  console.log("ADDING NEW SHOW");
   let categories = req.body.category.split(",");
   const shop = new Shop({
     _id: new mongoose.Types.ObjectId(),
     name: req.body.name,
     email: req.body.email,
+    photo: {
+      data: fs.readFileSync(
+        path.join(__dirname + "/../../" + "/uploads/" + req.file.filename)
+      ),
+      contentType: req.file.mimetype,
+    },
     bio: req.body.bio,
     category: categories,
     facebook: req.body.facebook,
@@ -32,11 +41,14 @@ exports.shops_add_new = (req, res, next) => {
     .save()
     .then((doc) => {
       res.status(201).json({
-        wiadomosc: "Dodano nowy produkt",
+        wiadomosc: "Dodano nowy sklep",
         info: doc,
       });
     })
-    .catch((err) => res.status(500).json({ error: err }));
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({ error: err });
+    });
 };
 
 //pobierz pojedynczy sklep
@@ -56,10 +68,17 @@ exports.shops_get_shop = (req, res, next) => {
 //zmien pojedynczy sklep
 exports.shops_update = (req, res, next) => {
   const id = req.params.shopId;
+  let categories = req.body.category.split(",");
   Shop.findByIdAndUpdate(id, {
     name: req.body.name,
     bio: req.body.bio,
-    category: req.body.category,
+    photo: {
+      data: fs.readFileSync(
+        path.join(__dirname + "/../../" + "/uploads/" + req.file.filename)
+      ),
+      contentType: req.file.mimetype,
+    },
+    category: categories,
     facebook: req.body.facebook,
     instagram: req.body.instagram,
     website: req.body.website,
