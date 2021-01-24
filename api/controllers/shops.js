@@ -17,7 +17,6 @@ exports.shops_get_all = (req, res, next) => {
 
 //dodaj nowy sklep
 exports.shops_add_new = (req, res, next) => {
-  console.log("ADDING NEW SHOW");
   let categories = req.body.category.split(",");
   const shop = new Shop({
     _id: new mongoose.Types.ObjectId(),
@@ -53,7 +52,6 @@ exports.shops_add_new = (req, res, next) => {
 
 //pobierz pojedynczy sklep
 exports.shops_get_shop = (req, res, next) => {
-  console.log("getting show");
   const id = req.params.shopId;
   Shop.findById(id)
     .then((doc) => {
@@ -69,6 +67,7 @@ exports.shops_get_shop = (req, res, next) => {
 exports.shops_update = (req, res, next) => {
   const id = req.params.shopId;
   let categories = req.body.category.split(",");
+  console.log(req.file.filename);
   Shop.findByIdAndUpdate(id, {
     name: req.body.name,
     bio: req.body.bio,
@@ -82,7 +81,6 @@ exports.shops_update = (req, res, next) => {
     facebook: req.body.facebook,
     instagram: req.body.instagram,
     website: req.body.website,
-    followers: req.body.followers,
   })
     .then((doc) => {
       res.status(200).json({
@@ -90,7 +88,10 @@ exports.shops_update = (req, res, next) => {
         info: doc,
       });
     })
-    .catch((err) => res.status(500).json({ error: err }));
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({ error: err });
+    });
 };
 
 //usun pojedynczy sklep

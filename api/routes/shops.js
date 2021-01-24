@@ -10,7 +10,6 @@ const storage = multer.diskStorage({
     cb(null, "./uploads");
   },
   filename: function (req, file, cb) {
-    console.log(req, file);
     cb(
       null,
       new Date().toISOString().replace(":", "_").replace(":", "_") +
@@ -41,12 +40,7 @@ router.post("/", upload.single("photo"), ShopController.shops_add_new);
 router.get("/:shopId", ShopController.shops_get_shop);
 ``;
 //zmien pojedynczy sklep
-router.patch(
-  "/:shopId",
-  checkAuth,
-  upload.single("photo"),
-  ShopController.shops_update
-);
+router.patch("/:shopId", upload.single("photo"), ShopController.shops_update);
 
 //usun pojedynczy sklep
 router.delete("/:shopId", checkAuth, ShopController.shops_delete);

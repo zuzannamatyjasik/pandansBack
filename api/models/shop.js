@@ -35,7 +35,6 @@ const shopSchema = mongoose.Schema({
   website: {
     type: String,
   },
-  followers: Number,
 });
 
 module.exports = mongoose.model("Shop", shopSchema);
